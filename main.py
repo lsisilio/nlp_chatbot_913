@@ -66,10 +66,6 @@ def webhook():
 
 import json
 import requests
-# APIs
-# Getting keys
-with open('config.json') as config_file:
-    config_data = json.load(config_file)
 
 # OpenWeatherMap API
 WEATHER_API_BASE_URL    = 'http://api.openweathermap.org/data/2.5/forecast?'
