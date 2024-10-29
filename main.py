@@ -39,6 +39,7 @@ def webhook():
         if re.fullmatch(r'\d{8}', callback_data):
             data = get_address(callback_data)
             response = format_response([data])
+            print(response)
         else:
             logger.warning(f'callback_data não reconhecido: {callback_data}')
             response = format_response(['Nenhuma opção válida foi selecionada.'])
@@ -64,6 +65,7 @@ def get_address(cep):
     if response.status_code == 200:
         previsão_entrega = random.randint(1, 14)    
         data = f"O documento será entregue na {response_data['logradouro']}, {response_data['localidade']} - {response_data['uf']} em até {previsão_entrega} dias."
+        print(data)
         return data
     else:
         return f"Erro na requisição: {response.status_code}"
