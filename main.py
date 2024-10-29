@@ -25,23 +25,24 @@ def webhook():
     logger.info(f"Recebido JSON: {data}")
 
     action = data['queryResult'].get('action', 'Unknown Action')
-    parameters = data['queryResult'].get('parameters', {})
+    parameter = data['queryResult'].get('queryText')
     
     # Extrair callback_data corretamente da requisição do Telegram
-    callback_data = data['originalDetectIntentRequest']['payload']['data']['callback_query'].get('data')
+    #callback_data = data['originalDetectIntentRequest']['payload']['data']['callback_query'].get('data')
 
     # Usando logs ao invés de print
+    logger.info(f"parameter: {parameter}")
     logger.info(f"action: {action}")
-    logger.info(f"callback_data: {callback_data}")
+    #logger.info(f"callback_data: {callback_data}")
 
     if action == 'cep':
         # Verificando se o CEP informado tem oito caracteres
-        if re.fullmatch(r'\d{8}', callback_data):
-            data = get_address(callback_data)
+        if re.fullmatch(r'\d{8}', parameter):
+            data = get_address(parameter)
             response = format_response([data])
             print(response)
         else:
-            logger.warning(f'callback_data não reconhecido: {callback_data}')
+            logger.warning(f'parameter não reconhecido: {parameter}')
             response = format_response(['Nenhuma opção válida foi selecionada.'])
 
     elif action == 'inputUnknown':
